@@ -61,7 +61,7 @@ def compress_files():
             if os.path.exists(tarball_path):
                 i = 0
                 while True:
-                    tarball_path = f'{path}.{i}.tar.gz'
+                    tarball_path = f'{path}.{i:03d}.tar.gz'
                     if not os.path.exists(tarball_path):
                         break
                     i += 1
