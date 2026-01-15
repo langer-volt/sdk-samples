@@ -38,7 +38,7 @@ def get_config_value(key, default):
                 if item.get('name') == key:
                     value = item.get('value')
                     if value:
-                        return int(value)
+                        return float(value)
         return default
     except Exception as e:
         cp.log(f'Error reading config {key}: {e}')
@@ -55,31 +55,29 @@ def compress_files():
         path = os.path.join('logs', logfile)
         try:
             original_mtime = os.path.getmtime(path)
-            with tarfile.open(f'{path}.tar.gz', 'w:gz') as tar:
+
+            # Find the next available tarball filename
+            tarball_path = f'{path}.tar.gz'
+            if os.path.exists(tarball_path):
+                i = 0
+                while True:
+                    tarball_path = f'{path}.{i}.tar.gz'
+                    if not os.path.exists(tarball_path):
+                        break
+                    i += 1
+
+            with tarfile.open(tarball_path, 'w:gz') as tar:
                 tar.add(path, arcname=os.path.basename(path))
-            os.utime(f'{path}.tar.gz', (original_mtime, original_mtime))
+            os.utime(tarball_path, (original_mtime, original_mtime))
             os.remove(path)
         except Exception as e:
             cp.log(f'Compression failed for {logfile}: {e}')
-            if os.path.exists(f'{path}.tar.gz'):
-                os.remove(f'{path}.tar.gz')
+            if os.path.exists(tarball_path):
+                os.remove(tarball_path)
 
 def write_logs():
     timestamp = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-    logfile = f'logs/Log - {mac} {timestamp}'
-    if os.path.exists(f'{logfile}.txt'):
-        i = 1
-        while True:
-            suffix = f'({i})'
-            if not os.path.exists(f'{logfile} {suffix}.txt'):
-                logfile = f'{logfile} {suffix}.txt'
-                cp.log(f'LOGFILE {logfile}')
-                break
-            else:
-                cp.log('NOPE!')
-                i += 1
-    else:
-        logfile += '.txt'
+    logfile = f'logs/Log - {mac} {timestamp}.txt'
     f = open(logfile, 'wt')
     try:
         cmd = ['/usr/bin/tail', '/var/log/messages', '-n1', '-F']
