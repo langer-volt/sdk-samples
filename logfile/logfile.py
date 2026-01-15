@@ -6,9 +6,15 @@ and you can recover logs after a reboot.  Via Remote Connect!
 
 Log files will be created with filenames containing the router MAC address and timestamp.  Example:
 Log - 0030443B3877.2022-11-11 09:52:25.txt
+Log - 0030443B3877.2022-11-11 09:52:25.txt.tar.gz (after rotation)
 
-When the log file reaches the maximum file size (Default 10MB) it will start a new log file.
+When the log file reaches the maximum file size (default 10MB) it will start a new log file.
+Rotated logs are compressed to .tar.gz to save space.
 When the total size of log files exceeds the maximum storage (default 100MB) it will delete the oldest logs.
+
+Settings can be configured via /config/system/sdk/appdata:
+  - logfile_max_file_size_MB: max size of a single log file before rotation (default 10)
+  - logfile_max_total_storage_MB: max total storage for all logs before deleting oldest (default 100)
 
 Use Remote Connect LAN Manager to connect to 127.0.0.1 port 8000 HTTP.
 Or forward the LAN zone to the ROUTER zone for local access on http://{ROUTER IP}:8000.
