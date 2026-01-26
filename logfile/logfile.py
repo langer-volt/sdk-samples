@@ -32,7 +32,7 @@ MB = 2**20
 
 # Default values
 DEFAULT_MAX_FILE_SIZE_MB = 10
-DEFAULT_MAX_TOTAL_STORAGE_MB = 100
+DEFAULT_MAX_TOTAL_STORAGE_MB = 50
 
 # Get config values from appdata, or use defaults
 def get_config_value(key, default):
@@ -83,8 +83,9 @@ def compress_files():
 
 def write_logs():
     timestamp = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-    logfile = f'logs/Log - {mac} {timestamp}.txt'
-    f = open(logfile, 'wt')
+    logfile = f'Log - {mac} {timestamp}.txt'
+    logpath = os.path.join('logs', logfile)
+    f = open(logpath, 'wt')
     try:
         cmd = ['/usr/bin/tail', '/var/log/messages', '-n1', '-F']
         tail = Popen(cmd, stdout=PIPE, stderr=PIPE)
