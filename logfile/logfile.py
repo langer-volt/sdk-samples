@@ -5,8 +5,8 @@ No more logs rolling over, no more physical USB flash drives,
 and you can recover logs after a reboot.  Via Remote Connect!
 
 Log files will be created with filenames containing the router MAC address and timestamp.  Example:
-Log - 0030443B3877.2022-11-11 09:52:25.txt
-Log - 0030443B3877.2022-11-11 09:52:25.txt.tar.gz (after rotation)
+Log - 0030443B3877.2026-01-26 09:52:25.txt
+Log - 0030443B3877.2026-01-26 09:52:25.txt.tar.gz (after rotation)
 
 When the log file reaches the maximum file size (default 10MB) it will start a new log file.
 Rotated logs are compressed to .tar.gz to save space.
