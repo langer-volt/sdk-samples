@@ -103,7 +103,6 @@ def write_logs():
             os.sync()
             if f.tell() > max_file_size:
                 f.close()
-                compress_files()
                 time.sleep(1)
                 return
     except Exception as e:
