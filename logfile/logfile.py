@@ -10,7 +10,7 @@ Log - 0030443B3877.2026-01-26 09:52:25.txt.tar.gz (after rotation)
 
 When the log file reaches the maximum file size (default 10MB) it will start a new log file.
 Rotated logs are compressed to .tar.gz to save space.
-When the total size of log files exceeds the maximum storage (default 100MB) it will delete the oldest logs.
+When the total size of log files exceeds the maximum storage (default 50MB) it will delete the oldest logs.
 
 Settings can be configured via /config/system/sdk/appdata:
   - logfile_max_file_size_MB: max size of a single log file before rotation (default 10)
